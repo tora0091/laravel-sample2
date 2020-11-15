@@ -54,7 +54,7 @@
     $('#file_upload').on('change', function() {
         upload_file = $(this).prop('files')[0];
         // if (! upload_file.type.match('image/*')) {
-            var form = new FormData();
+            let form = new FormData();
             form.append('upload_file', upload_file);
 
             $.ajax({
@@ -67,14 +67,15 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-            }).done(function (data) {
-                var json_objct = JSON.stringify(data);
-                var json_data = JSON.parse(json_objct);
-                var image_file_name = json_data['file_name'];
+            }).done((data) => {
+                let json_objct = JSON.stringify(data);
+                let json_data = JSON.parse(json_objct);
+                let image_file_name = json_data['file_name'];
 
-                $('#image_file').remove();
-                $('#image_area').append('<image id="image_file" src="images/' + image_file_name + '">');
-            }).fail(function(error) {
+                $('#image_area').empty();
+                $('#image_area').append(`<image id="image_file" src="images/${image_file_name}">
+                    <input type="hidden" name="image_file_name" value="${image_file_name}">`);
+            }).fail((error) => {
                 console.log(error);
             });
         // }
@@ -94,31 +95,31 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-        }).done(function(data) {
-            var json_objct = JSON.stringify(data);
-            var json_data = JSON.parse(json_objct);
+        }).done((data) => {
+            let json_objct = JSON.stringify(data);
+            let json_data = JSON.parse(json_objct);
 
-            html_tag = '<div id="select_list">';
-            $.each(json_data, function(k, v) {
-                html_tag += '<label><input type="radio" name="player_id" id="player_id" value="' + k + '">' + v + '</label><br>';
+            let html_tag = '<div id="select_list">';
+            $.each(json_data, function(index, name) {
+                html_tag += `<label><input type="radio" name="player_id" id="player_id" value="${index}">${name}</label><br>`;
             })
             html_tag += '</div>';
 
-            $('#select_list').remove();
+            $('#select_area').empty();
             $('#select_area').append(html_tag);
-        }).fail(function(error) {
+        }).fail((error) => {
             console.log(error);
         });
     });
 
     $('#send_button').on('click', function() {
-        checked = $('input[id="player_id"]:checked');
-        player_id = checked.val();
-        player_name = checked.parent().text();
+        let checked = $('input[id="player_id"]:checked');
+        let player_id = checked.val();
+        let player_name = checked.parent().text();
 
-        html_tag = '<p>' + player_id + ': ' + player_name + '</p>\
-            <input type="hidden" name="player_id" value="' + player_id + '">\
-            <input type="hidden" name="player_name" value="' + player_name + '">';
+        let html_tag = `<p>${player_id}: ${player_name}</p>
+            <input type="hidden" name="player_id" value="${player_id}">
+            <input type="hidden" name="player_name" value="${player_name}">`;
 
         $('#selected_player_area').empty();        
         $('#selected_player_area').append(html_tag);

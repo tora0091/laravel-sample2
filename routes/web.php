@@ -25,3 +25,5 @@ Route::get('/favorite_player', 'ModalWindowController@index');
 Route::post('/api/favorite_player', 'ModalWindowController@favoritePlayer');
 
 Route::get('/area_selection', 'AreaSelectionController@index');
+
+Route::get('/pdf', 'PdfController@index');

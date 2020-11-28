@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class ModalWindowController extends Controller
 {
-    public function index(Request $request)
+    public function index()
+    {
+        return view('favorite_player.index');
+    }
+
+    public function favoritePlayer(Request $request)
     {
         $validated = $request->validate([
             'selected_number' => 'required|between:1,5',

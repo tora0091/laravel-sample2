@@ -7,7 +7,12 @@ use Illuminate\Support\Str;
 
 class FileUploadController extends Controller
 {
-    public function index(Request $request)
+    public function index()
+    {
+        return view('file_upload.index');
+    }
+
+    public function fileUpload(Request $request)
     {
         $upload_directory = public_path() . '/images/';
 

@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'IndexController@index');
 Route::get('/admin', 'IndexController@index');
+Route::get('/home', 'IndexController@index');
 
-Route::post('/file_upload', 'FileUploadController@index');
-Route::post('/favorite_player', 'ModalWindowController@index');
+Route::get('/file_upload', 'FileUploadController@index');
+Route::post('/api/file_upload', 'FileUploadController@fileUpload');
+
+Route::get('/favorite_player', 'ModalWindowController@index');
+Route::post('/api/favorite_player', 'ModalWindowController@favoritePlayer');
+
+Route::get('/area_selection', 'AreaSelectionController@index');
